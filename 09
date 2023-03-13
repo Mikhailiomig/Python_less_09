@@ -1,0 +1,51 @@
+# Дополнить телефонный справочник возможностью изменения и удаления данных.
+# Пользователь также может ввести имя или фамилию, и Вы должны реализовать функционал
+# для изменения и удаления данных.
+
+a = int (input ('Если вы хотите найти номер, нажмите 1 \nЕсли вы хотите сделать новыю запись, нажмите 2\nЕсли вы хотите удалить номер, нажмите 3 \n'))
+if a == 1:
+    print ('Имя:')
+    filename = 'data.txt'
+    key = input ()
+    with open(filename, 'r', encoding="utf-8") as file:
+        content = file.read()
+    lines = content.split('\n')
+    data = {}
+    for line in lines:
+        if line:
+            k, v = line.split(':')
+            data[k.strip()] = v.strip()
+    if key in data:
+        print('Номер телефона: ',data[key])
+    else:
+        print('Нет такого имени в списке')
+
+elif a == 2:
+    name = input ('Введите  имя: ''\n')
+    number = int (input ('Введите номер:''\n'))
+    with open('data.txt', 'a', encoding="utf-8") as file:
+        file.write('\n{}:{}'.format(name, number))
+        print ('Данные записаны')
+
+elif a == 3:
+    with open('data.txt', 'r', encoding="utf-8") as file:   
+        lines = file.readlines()
+    key_to_delete = input("Введите имя для удаления номера:\n")
+    new_lines = []        # Ищем строку с нужным ключом и удаляем ее
+    for line in lines:
+        if not line.startswith(key_to_delete + ':'):
+            new_lines.append(line)   
+    with open('data.txt', 'w', encoding="utf-8") as file:   # Записываем оставшиеся строки обратно в файл
+        file.writelines(new_lines)
+    print ('Номер был удален')
+else:
+    print ('Введите корректную команду')
+
+
+
+
+
+
+
+
+
